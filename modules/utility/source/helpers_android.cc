@@ -9,8 +9,9 @@
  */
 
 #include "modules/utility/include/helpers_android.h"
-
+#ifdef WEBRTC_ANDROID
 #include <android/log.h>
+#endif
 #include <assert.h>
 #include <pthread.h>
 #include <stddef.h>
@@ -20,7 +21,11 @@
 #include "rtc_base/platform_thread.h"
 
 #define TAG "HelpersAndroid"
+#ifdef WEBRTC_ANDROID
 #define ALOGD(...) __android_log_print(ANDROID_LOG_DEBUG, TAG, __VA_ARGS__)
+#else
+#define ALOGD(...) 
+#endif
 
 namespace webrtc {
 

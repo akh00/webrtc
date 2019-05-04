@@ -107,8 +107,6 @@ JavaToNativePeerConnectionFactoryOptions(JNIEnv* jni,
       Java_Options_getNetworkIgnoreMask(jni, j_options);
   native_options.disable_encryption =
       Java_Options_getDisableEncryption(jni, j_options);
-  native_options.disable_network_monitor =
-      Java_Options_getDisableNetworkMonitor(jni, j_options);
 
   return native_options;
 }
@@ -280,13 +278,6 @@ ScopedJavaLocalRef<jobject> CreatePeerConnectionFactoryForJava(
 
   const absl::optional<PeerConnectionFactoryInterface::Options> options =
       JavaToNativePeerConnectionFactoryOptions(jni, joptions);
-
-  // Do not create network_monitor_factory only if the options are
-  // provided and disable_network_monitor therein is set to true.
-  if (!(options && options->disable_network_monitor)) {
-    network_monitor_factory = new AndroidNetworkMonitorFactory();
-    rtc::NetworkMonitorFactory::SetFactory(network_monitor_factory);
-  }
 
   rtc::scoped_refptr<AudioMixer> audio_mixer = nullptr;
   std::unique_ptr<CallFactoryInterface> call_factory(CreateCallFactory());

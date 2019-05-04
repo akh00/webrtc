@@ -1,0 +1,1 @@
+gn gen out/DebugLin2 --args='rtc_build_examples=false rtc_use_x11=false linux_use_bundled_binutils=true build_with_mozilla=false rtc_include_tests=false rtc_build_tools=false rtc_enable_protobuf=false'

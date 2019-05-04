@@ -11,9 +11,13 @@ import("../../webrtc.gni")
 rtc_static_library("utility") {
   visibility = [ "*" ]
   sources = [
+    "include/helpers_linux.h",
+    "include/jvm_linux.h",
     "include/helpers_android.h",
     "include/jvm_android.h",
     "include/process_thread.h",
+    "source/helpers_linux.cc",
+    "source/jvm_linux.cc",
     "source/helpers_android.cc",
     "source/jvm_android.cc",
     "source/process_thread_impl.cc",

@@ -14,12 +14,17 @@ if (is_ios) {
 if (is_mac) {
   import("//build/config/mac/rules.gni")
 }
-
+if (is_linuxsdk) {
+  import("//build/config/linuxsdk/rules.gni")
+}
 group("sdk") {
   public_deps = []
   if (!build_with_chromium) {
     if (is_android) {
       public_deps += [ "android" ]
+    }
+    if (is_linuxsdk) {
+      public_deps += [ "linuxsdk" ]
     }
     if (is_ios) {
       public_deps += [ ":framework_objc" ]

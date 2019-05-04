@@ -7,8 +7,9 @@
  *  in the file PATENTS.  All contributing project authors may
  *  be found in the AUTHORS file in the root of the source tree.
  */
-
+#ifdef WEBRTC_ANDROID
 #include <android/log.h>
+#endif
 
 #include <memory>
 

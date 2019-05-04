@@ -11,7 +11,6 @@
 # resolved or known not to exist (which will cause the build to fail). So if
 # you add a new build file, there must be some path of dependencies from this
 # file to your new one or GN won't know about it.
-
 import("//build/config/linux/pkg_config.gni")
 import("//build/config/sanitizers/sanitizers.gni")
 import("webrtc.gni")
@@ -21,6 +20,9 @@ if (rtc_enable_protobuf) {
 if (is_android) {
   import("//build/config/android/config.gni")
   import("//build/config/android/rules.gni")
+}
+if (is_linuxsdk) {
+  import("//build/config/linuxsdk/rules.gni")
 }
 
 if (!build_with_chromium) {

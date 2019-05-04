@@ -34,7 +34,9 @@ if (is_ios) {
 if (is_mac) {
   import("//build/config/mac/rules.gni")
 }
-
+if (is_linuxsdk) {
+  import("//build/config/linuxsdk/rules.gni")
+}
 declare_args() {
   # Setting this to true will make RTC_EXPORT (see rtc_base/system/rtc_export.h)
   # expand to code that will manage symbols visibility.
@@ -366,6 +368,7 @@ all_poison_types = [
 
 absl_include_config = "//third_party/abseil-cpp:absl_include_config"
 absl_define_config = "//third_party/abseil-cpp:absl_define_config"
+linuxsdk_include_config = "//build/config/linuxsdk:linuxsdk_include_config"
 
 template("rtc_test") {
   test(target_name) {
@@ -389,6 +392,7 @@ template("rtc_test") {
       rtc_common_inherited_config,
       absl_include_config,
       absl_define_config,
+      linuxsdk_include_config
     ]
     if (defined(invoker.public_configs)) {
       public_configs += invoker.public_configs
@@ -465,6 +469,7 @@ template("rtc_source_set") {
       rtc_common_inherited_config,
       absl_include_config,
       absl_define_config,
+      linuxsdk_include_config
     ]
     if (defined(invoker.public_configs)) {
       public_configs += invoker.public_configs
@@ -496,6 +501,7 @@ template("rtc_executable") {
       rtc_common_inherited_config,
       absl_include_config,
       absl_define_config,
+      linuxsdk_include_config
     ]
     if (defined(invoker.public_configs)) {
       public_configs += invoker.public_configs
@@ -574,6 +580,7 @@ template("rtc_static_library") {
       rtc_common_inherited_config,
       absl_include_config,
       absl_define_config,
+      linuxsdk_include_config
     ]
     if (defined(invoker.public_configs)) {
       public_configs += invoker.public_configs
@@ -641,6 +648,7 @@ template("rtc_shared_library") {
       rtc_common_inherited_config,
       absl_include_config,
       absl_define_config,
+      linuxsdk_include_config
     ]
     if (defined(invoker.public_configs)) {
       public_configs += invoker.public_configs
@@ -823,6 +831,30 @@ if (is_mac) {
   }
 }
 
+if (is_linuxsdk) {
+  template("rtc_linuxsdk_library") {
+    java_library(target_name) {
+      forward_variables_from(invoker,
+                             "*",
+                             [
+                               "configs",
+                               "public_configs",
+                               "suppressed_configs",
+                               "visibility",
+                             ])
+
+      errorprone_args = []
+
+      # Treat warnings as errors.
+      errorprone_args += [ "-Werror" ]
+      if (!defined(deps)) {
+        deps = []
+      }
+
+    }
+  }
+
+}
 if (is_android) {
   template("rtc_android_library") {
     android_library(target_name) {
