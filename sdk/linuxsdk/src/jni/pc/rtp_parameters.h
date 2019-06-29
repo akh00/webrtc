@@ -14,7 +14,7 @@
 #include <jni.h>
 
 #include "api/rtp_parameters.h"
-#include "sdk/android/native_api/jni/scoped_java_ref.h"
+#include "sdk/linuxsdk/native_api/jni/scoped_java_ref.h"
 
 namespace webrtc {
 namespace jni {

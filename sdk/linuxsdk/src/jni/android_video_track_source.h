@@ -19,7 +19,7 @@
 #include "rtc_base/async_invoker.h"
 #include "rtc_base/checks.h"
 #include "rtc_base/timestamp_aligner.h"
-#include "sdk/android/src/jni/video_frame.h"
+#include "sdk/linuxsdk/src/jni/video_frame.h"
 
 namespace webrtc {
 namespace jni {

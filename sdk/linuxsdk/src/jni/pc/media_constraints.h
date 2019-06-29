@@ -14,7 +14,7 @@
 #include <jni.h>
 #include <memory>
 
-#include "sdk/android/native_api/jni/scoped_java_ref.h"
+#include "sdk/linuxsdk/native_api/jni/scoped_java_ref.h"
 #include "sdk/media_constraints.h"
 
 namespace webrtc {

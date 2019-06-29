@@ -17,7 +17,7 @@
 #define WEBRTC_ANDROID 1
 #include "rtc_base/thread.h"
 #undef WEBRTC_ANDROID
-#include "sdk/android/src/jni/jni_helpers.h"
+#include "sdk/linuxsdk/src/jni/jni_helpers.h"
 
 namespace webrtc {
 namespace jni {

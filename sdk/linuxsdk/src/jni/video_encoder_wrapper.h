@@ -20,8 +20,8 @@
 #include "api/video_codecs/video_encoder.h"
 #include "common_video/h264/h264_bitstream_parser.h"
 #include "modules/video_coding/codecs/vp9/include/vp9_globals.h"
-#include "sdk/android/src/jni/jni_helpers.h"
-#include "sdk/android/src/jni/video_frame.h"
+#include "sdk/linuxsdk/src/jni/jni_helpers.h"
+#include "sdk/linuxsdk/src/jni/video_frame.h"
 
 namespace webrtc {
 namespace jni {

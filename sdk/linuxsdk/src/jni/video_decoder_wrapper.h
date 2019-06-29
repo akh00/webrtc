@@ -19,7 +19,7 @@
 #include "common_video/h264/h264_bitstream_parser.h"
 #include "rtc_base/race_checker.h"
 #include "rtc_base/thread_checker.h"
-#include "sdk/android/src/jni/jni_helpers.h"
+#include "sdk/linuxsdk/src/jni/jni_helpers.h"
 
 namespace webrtc {
 namespace jni {

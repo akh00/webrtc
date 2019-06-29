@@ -14,7 +14,7 @@
 #include <jni.h>
 
 #include "api/video_codecs/sdp_video_format.h"
-#include "sdk/android/src/jni/jni_helpers.h"
+#include "sdk/linuxsdk/src/jni/jni_helpers.h"
 
 namespace webrtc {
 namespace jni {

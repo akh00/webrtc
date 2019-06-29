@@ -13,8 +13,8 @@
 
 #include "rtc_base/ref_count.h"
 #include "rtc_base/rtc_certificate.h"
-#include "sdk/android/native_api/jni/java_types.h"
-#include "sdk/android/src/jni/jni_helpers.h"
+#include "sdk/linuxsdk/native_api/jni/java_types.h"
+#include "sdk/linuxsdk/src/jni/jni_helpers.h"
 
 namespace webrtc {
 namespace jni {

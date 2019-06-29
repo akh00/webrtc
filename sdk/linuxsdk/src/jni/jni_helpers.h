@@ -17,9 +17,9 @@
 #include <jni.h>
 #include <string>
 
-#include "sdk/android/native_api/jni/java_types.h"
-#include "sdk/android/native_api/jni/scoped_java_ref.h"
-#include "sdk/android/src/jni/jvm.h"
+#include "sdk/linuxsdk/native_api/jni/java_types.h"
+#include "sdk/linuxsdk/native_api/jni/scoped_java_ref.h"
+#include "sdk/linuxsdk/src/jni/jvm.h"
 
 // Convenience macro defining JNI-accessible methods in the org.webrtc package.
 // Eliminates unnecessary boilerplate and line-wraps, reducing visual clutter.

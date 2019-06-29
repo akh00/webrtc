@@ -16,7 +16,7 @@
 
 #include "api/media_stream_interface.h"
 #include "pc/media_stream_observer.h"
-#include "sdk/android/src/jni/jni_helpers.h"
+#include "sdk/linuxsdk/src/jni/jni_helpers.h"
 
 namespace webrtc {
 namespace jni {

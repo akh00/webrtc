@@ -15,8 +15,8 @@
 #include <string>
 
 #include "api/peer_connection_interface.h"
-#include "sdk/android/src/jni/jni_helpers.h"
-#include "sdk/android/src/jni/pc/session_description.h"
+#include "sdk/linuxsdk/src/jni/jni_helpers.h"
+#include "sdk/linuxsdk/src/jni/pc/session_description.h"
 #include "sdk/media_constraints.h"
 
 namespace webrtc {

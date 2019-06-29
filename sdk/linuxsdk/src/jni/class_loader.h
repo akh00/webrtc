@@ -8,12 +8,12 @@
  *  be found in the AUTHORS file in the root of the source tree.
  */
 
-// Deprecated: use sdk/android/native_api/jni/class_loader.h instead.
+// Deprecated: use sdk/linuxsdk/native_api/jni/class_loader.h instead.
 
 #ifndef SDK_ANDROID_SRC_JNI_CLASS_LOADER_H_
 #define SDK_ANDROID_SRC_JNI_CLASS_LOADER_H_
 
-#include "sdk/android/native_api/jni/class_loader.h"
+#include "sdk/linuxsdk/native_api/jni/class_loader.h"
 
 namespace webrtc {
 namespace jni {

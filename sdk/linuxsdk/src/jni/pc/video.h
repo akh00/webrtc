@@ -15,7 +15,7 @@
 
 #include "api/scoped_refptr.h"
 #include "rtc_base/thread.h"
-#include "sdk/android/native_api/jni/scoped_java_ref.h"
+#include "sdk/linuxsdk/native_api/jni/scoped_java_ref.h"
 
 namespace webrtc {
 class VideoEncoderFactory;

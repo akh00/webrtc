@@ -17,11 +17,11 @@
 
 #include "api/peer_connection_interface.h"
 #include "pc/media_stream_observer.h"
-#include "sdk/android/src/jni/jni_helpers.h"
-#include "sdk/android/src/jni/pc/media_constraints.h"
-#include "sdk/android/src/jni/pc/media_stream.h"
-#include "sdk/android/src/jni/pc/rtp_receiver.h"
-#include "sdk/android/src/jni/pc/rtp_transceiver.h"
+#include "sdk/linuxsdk/src/jni/jni_helpers.h"
+#include "sdk/linuxsdk/src/jni/pc/media_constraints.h"
+#include "sdk/linuxsdk/src/jni/pc/media_stream.h"
+#include "sdk/linuxsdk/src/jni/pc/rtp_receiver.h"
+#include "sdk/linuxsdk/src/jni/pc/rtp_transceiver.h"
 
 namespace webrtc {
 namespace jni {

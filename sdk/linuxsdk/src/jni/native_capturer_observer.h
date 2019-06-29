@@ -13,8 +13,8 @@
 
 #include <jni.h>
 
-#include "sdk/android/native_api/jni/scoped_java_ref.h"
-#include "sdk/android/src/jni/android_video_track_source.h"
+#include "sdk/linuxsdk/native_api/jni/scoped_java_ref.h"
+#include "sdk/linuxsdk/src/jni/android_video_track_source.h"
 
 namespace webrtc {
 namespace jni {

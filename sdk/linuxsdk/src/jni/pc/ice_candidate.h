@@ -19,7 +19,7 @@
 #include "api/peer_connection_interface.h"
 #include "api/rtp_parameters.h"
 #include "rtc_base/ssl_identity.h"
-#include "sdk/android/src/jni/jni_helpers.h"
+#include "sdk/linuxsdk/src/jni/jni_helpers.h"
 
 namespace webrtc {
 namespace jni {
