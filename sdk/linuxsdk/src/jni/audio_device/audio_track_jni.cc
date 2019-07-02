@@ -25,9 +25,8 @@ namespace webrtc {
 namespace jni {
 
 ScopedJavaLocalRef<jobject> AudioTrackJni::CreateJavaWebRtcAudioTrack(
-    JNIEnv* env,
-    const JavaRef<jobject>& j_audio_manager) {
-  return Java_WebRtcAudioTrack_Constructor(env, j_audio_manager);
+    JNIEnv* env) {
+  return Java_WebRtcAudioTrack_Constructor(env);
 }
 
 AudioTrackJni::AudioTrackJni(JNIEnv* env,

@@ -67,15 +67,12 @@ class AudioOutput {
   virtual void AttachAudioBuffer(AudioDeviceBuffer* audioBuffer) = 0;
 };
 
-// Extract an android.media.AudioManager from an android.content.Context.
-ScopedJavaLocalRef<jobject> GetAudioManager(JNIEnv* env);
 
 // Get default audio sample rate by querying an android.media.AudioManager.
-int GetDefaultSampleRate(JNIEnv* env, const JavaRef<jobject>& j_audio_manager);
+int GetDefaultSampleRate(JNIEnv* env);
 
 // Get audio input and output parameters based on a number of settings.
 void GetAudioParameters(JNIEnv* env,
-                        const JavaRef<jobject>& j_audio_manager,
                         int input_sample_rate,
                         int output_sample_rate,
                         bool use_stereo_input,

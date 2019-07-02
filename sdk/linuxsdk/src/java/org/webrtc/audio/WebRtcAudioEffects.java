@@ -31,7 +31,7 @@ class WebRtcAudioEffects {
   }
 
   public WebRtcAudioEffects() {
-    Logging.d(TAG, "ctor" + WebRtcAudioUtils.getThreadInfo());
+    Logging.d(TAG, "ctor");
   }
 
   // Call this method to enable or disable the platform AEC. It modifies

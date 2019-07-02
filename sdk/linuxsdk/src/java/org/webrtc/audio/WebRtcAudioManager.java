@@ -23,28 +23,21 @@ class WebRtcAudioManager {
 
   // Default audio data format is PCM 16 bit per sample.
   // Guaranteed to be supported by all devices.
-  private static final int BITS_PER_SAMPLE = 16;
+  // private static final int BITS_PER_SAMPLE = 16;
 
   private static final int DEFAULT_FRAME_PER_BUFFER = 256;
   
-  private static AudioManager manager = new AudioManager(); 
-
   @CalledByNative
-  static AudioManager getAudioManager() {
-    return manager;
-  }
-
-  @CalledByNative
-  static int getOutputBufferSize(AudioManager audioManager, int sampleRate, int numberOfOutputChannels) {
+  static int getOutputBufferSize(int sampleRate, int numberOfOutputChannels) {
     return isLowLatencyOutputSupported()
-        ? getLowLatencyFramesPerBuffer(audioManager)
+        ? getLowLatencyFramesPerBuffer()
         : getMinOutputFrameSize(sampleRate, numberOfOutputChannels);
   }
 
   @CalledByNative
-  static int getInputBufferSize(AudioManager audioManager, int sampleRate, int numberOfInputChannels) {
+  static int getInputBufferSize(int sampleRate, int numberOfInputChannels) {
     return isLowLatencyInputSupported()
-        ? getLowLatencyFramesPerBuffer(audioManager)
+        ? getLowLatencyFramesPerBuffer()
         : getMinInputFrameSize(sampleRate, numberOfInputChannels);
   }
 
@@ -60,25 +53,19 @@ class WebRtcAudioManager {
    * Returns the native input/output sample rate for this device's output stream.
    */
   @CalledByNative
-  static int getSampleRate(AudioManager audioManager) {
-    // Override this if we're running on an old emulator image which only
-    // supports 8 kHz and doesn't support PROPERTY_OUTPUT_SAMPLE_RATE.
-    if (WebRtcAudioUtils.runningOnEmulator()) {
-      Logging.d(TAG, "Running emulator, overriding sample rate to 8 kHz.");
-      return 8000;
-    }
+  static int getSampleRate() {
     // Deliver best possible estimate based on default Android AudioManager APIs.
-    final int sampleRateHz = getSampleRateForApiLevel(audioManager);
+    final int sampleRateHz = getSampleRateForApiLevel();
     Logging.d(TAG, "Sample rate is set to " + sampleRateHz + " Hz");
     return sampleRateHz;
   }
 
-  private static int getSampleRateForApiLevel(AudioManager audioManager) {
+  private static int getSampleRateForApiLevel() {
       return DEFAULT_SAMPLE_RATE_HZ;
   }
 
   // Returns the native output buffer size for low-latency output streams.
-  private static int getLowLatencyFramesPerBuffer(AudioManager audioManager) {
+  private static int getLowLatencyFramesPerBuffer() {
       return DEFAULT_FRAME_PER_BUFFER;
   }
 

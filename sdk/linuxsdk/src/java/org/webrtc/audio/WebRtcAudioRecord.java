@@ -44,7 +44,6 @@ class WebRtcAudioRecord {
   // Guaranteed to be supported by all devices.
   public static final int DEFAULT_AUDIO_FORMAT = AudioFormat.ENCODING_PCM_16BIT;
 
-  private final AudioManager audioManager;
   private final int audioSource;
   private final int audioFormat;
 
@@ -131,14 +130,14 @@ class WebRtcAudioRecord {
   }
 
   @CalledByNative
-  WebRtcAudioRecord(AudioManager audioManager) {
-    this(audioManager, DEFAULT_AUDIO_SOURCE, DEFAULT_AUDIO_FORMAT,
+  WebRtcAudioRecord() {
+    this(DEFAULT_AUDIO_SOURCE, DEFAULT_AUDIO_FORMAT,
         null /* errorCallback */, null /* audioSamplesReadyCallback */,
         WebRtcAudioEffects.isAcousticEchoCancelerSupported(),
         WebRtcAudioEffects.isNoiseSuppressorSupported());
   }
 
-  public WebRtcAudioRecord(AudioManager audioManager, int audioSource,
+  public WebRtcAudioRecord(int audioSource,
       int audioFormat, AudioRecordErrorCallback errorCallback,
       SamplesReadyCallback audioSamplesReadyCallback,
       boolean isAcousticEchoCancelerSupported, boolean isNoiseSuppressorSupported) {
@@ -148,7 +147,6 @@ class WebRtcAudioRecord {
     if (isNoiseSuppressorSupported && !WebRtcAudioEffects.isNoiseSuppressorSupported()) {
       throw new IllegalArgumentException("HW NS not supported");
     }
-    this.audioManager = audioManager;
     this.audioSource = audioSource;
     this.audioFormat = audioFormat;
     this.errorCallback = errorCallback;
@@ -270,7 +268,6 @@ class WebRtcAudioRecord {
     audioThread.stopThread();
     if (!ThreadUtils.joinUninterruptibly(audioThread, AUDIO_RECORD_THREAD_JOIN_TIMEOUT_MS)) {
       Logging.e(TAG, "Join of AudioRecordJavaThread timed out");
-      WebRtcAudioUtils.logAudioState(TAG, audioManager);
     }
     audioThread = null;
     effects.release();
@@ -322,7 +319,6 @@ class WebRtcAudioRecord {
 
   private void reportWebRtcAudioRecordInitError(String errorMessage) {
     Logging.e(TAG, "Init recording error: " + errorMessage);
-    WebRtcAudioUtils.logAudioState(TAG, audioManager);
     if (errorCallback != null) {
       errorCallback.onWebRtcAudioRecordInitError(errorMessage);
     }
@@ -331,7 +327,6 @@ class WebRtcAudioRecord {
   private void reportWebRtcAudioRecordStartError(
       AudioRecordStartErrorCode errorCode, String errorMessage) {
     Logging.e(TAG, "Start recording error: " + errorCode + ". " + errorMessage);
-    WebRtcAudioUtils.logAudioState(TAG, audioManager);
     if (errorCallback != null) {
       errorCallback.onWebRtcAudioRecordStartError(errorCode, errorMessage);
     }
@@ -339,7 +334,6 @@ class WebRtcAudioRecord {
 
   private void reportWebRtcAudioRecordError(String errorMessage) {
     Logging.e(TAG, "Run-time recording error: " + errorMessage);
-    WebRtcAudioUtils.logAudioState(TAG, audioManager);
     if (errorCallback != null) {
       errorCallback.onWebRtcAudioRecordError(errorMessage);
     }

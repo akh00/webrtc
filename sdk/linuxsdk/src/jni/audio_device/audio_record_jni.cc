@@ -49,9 +49,8 @@ class ScopedHistogramTimer {
 }  // namespace
 
 ScopedJavaLocalRef<jobject> AudioRecordJni::CreateJavaWebRtcAudioRecord(
-    JNIEnv* env,
-    const JavaRef<jobject>& j_audio_manager) {
-  return Java_WebRtcAudioRecord_Constructor(env, j_audio_manager);
+    JNIEnv* env) {
+  return Java_WebRtcAudioRecord_Constructor(env);
 }
 
 AudioRecordJni::AudioRecordJni(JNIEnv* env,

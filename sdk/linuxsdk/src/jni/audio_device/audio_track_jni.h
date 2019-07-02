@@ -41,8 +41,7 @@ namespace jni {
 class AudioTrackJni : public AudioOutput {
  public:
   static ScopedJavaLocalRef<jobject> CreateJavaWebRtcAudioTrack(
-      JNIEnv* env,
-      const JavaRef<jobject>& j_audio_manager);
+      JNIEnv* env);
 
   AudioTrackJni(JNIEnv* env,
                 const AudioParameters& audio_parameters,

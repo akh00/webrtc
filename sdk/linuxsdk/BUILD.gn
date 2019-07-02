@@ -336,11 +336,9 @@ if (is_linuxsdk) {
       "src/java/org/webrtc/audio/WebRtcAudioManager.java",
       "src/java/org/webrtc/audio/WebRtcAudioRecord.java",
       "src/java/org/webrtc/audio/WebRtcAudioTrack.java",
-      "src/java/org/webrtc/audio/WebRtcAudioUtils.java",
       "src/java/org/webrtc/audio/AudioDeviceModule.java",
       "src/java/org/webrtc/audio/AudioTrack.java",
       "src/java/org/webrtc/audio/AudioRecord.java",
-      "src/java/org/webrtc/audio/AudioManager.java",
       "src/java/org/webrtc/audio/AudioFormat.java",
 
     ]

@@ -20,12 +20,11 @@ import org.webrtc.Logging;
 public class JavaAudioDeviceModule implements AudioDeviceModule {
   private static final String TAG = "JavaAudioDeviceModule";
 
-  public static Builder builder(AudioManager audioManager) {
-    return new Builder(audioManager);
+  public static Builder builder() {
+    return new Builder();
   }
 
   public static class Builder {
-    private final AudioManager audioManager;
     private int inputSampleRate;
     private int outputSampleRate;
     private int audioSource = WebRtcAudioRecord.DEFAULT_AUDIO_SOURCE;
@@ -38,10 +37,9 @@ public class JavaAudioDeviceModule implements AudioDeviceModule {
     private boolean useStereoInput;
     private boolean useStereoOutput;
 
-    private Builder(AudioManager audioManager) {
-      this.audioManager = audioManager;
-      this.inputSampleRate = WebRtcAudioManager.getSampleRate(audioManager);
-      this.outputSampleRate = WebRtcAudioManager.getSampleRate(audioManager);
+    private Builder() {
+      this.inputSampleRate = WebRtcAudioManager.getSampleRate();
+      this.outputSampleRate = WebRtcAudioManager.getSampleRate();
     }
 
     /**
@@ -183,12 +181,12 @@ public class JavaAudioDeviceModule implements AudioDeviceModule {
         }
         Logging.d(TAG, "HW AEC will not be used.");
       }
-      final WebRtcAudioRecord audioInput = new WebRtcAudioRecord(audioManager, audioSource,
+      final WebRtcAudioRecord audioInput = new WebRtcAudioRecord(audioSource,
           audioFormat, audioRecordErrorCallback, samplesReadyCallback,
           useHardwareAcousticEchoCanceler, useHardwareNoiseSuppressor);
       final WebRtcAudioTrack audioOutput =
-          new WebRtcAudioTrack(audioManager, audioTrackErrorCallback);
-      return new JavaAudioDeviceModule(audioManager, audioInput, audioOutput,
+          new WebRtcAudioTrack(audioTrackErrorCallback);
+      return new JavaAudioDeviceModule(audioInput, audioOutput,
           inputSampleRate, outputSampleRate, useStereoInput, useStereoOutput);
     }
   }
@@ -277,7 +275,6 @@ public class JavaAudioDeviceModule implements AudioDeviceModule {
     return WebRtcAudioEffects.isNoiseSuppressorSupported();
   }
 
-  private final AudioManager audioManager;
   private final WebRtcAudioRecord audioInput;
   private final WebRtcAudioTrack audioOutput;
   private final int inputSampleRate;
@@ -288,10 +285,9 @@ public class JavaAudioDeviceModule implements AudioDeviceModule {
   private final Object nativeLock = new Object();
   private long nativeAudioDeviceModule;
 
-  private JavaAudioDeviceModule(AudioManager audioManager,
+  private JavaAudioDeviceModule(
       WebRtcAudioRecord audioInput, WebRtcAudioTrack audioOutput, int inputSampleRate,
       int outputSampleRate, boolean useStereoInput, boolean useStereoOutput) {
-    this.audioManager = audioManager;
     this.audioInput = audioInput;
     this.audioOutput = audioOutput;
     this.inputSampleRate = inputSampleRate;
@@ -304,7 +300,7 @@ public class JavaAudioDeviceModule implements AudioDeviceModule {
   public long getNativeAudioDeviceModulePointer() {
     synchronized (nativeLock) {
       if (nativeAudioDeviceModule == 0) {
-        nativeAudioDeviceModule = nativeCreateAudioDeviceModule(audioManager, audioInput,
+        nativeAudioDeviceModule = nativeCreateAudioDeviceModule(audioInput,
             audioOutput, inputSampleRate, outputSampleRate, useStereoInput, useStereoOutput);
       }
       return nativeAudioDeviceModule;
@@ -334,6 +330,6 @@ public class JavaAudioDeviceModule implements AudioDeviceModule {
   }
 
   private static native long nativeCreateAudioDeviceModule(
-      AudioManager audioManager, WebRtcAudioRecord audioInput, WebRtcAudioTrack audioOutput,
+      WebRtcAudioRecord audioInput, WebRtcAudioTrack audioOutput,
       int inputSampleRate, int outputSampleRate, boolean useStereoInput, boolean useStereoOutput);
 }

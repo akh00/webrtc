@@ -44,8 +44,7 @@ namespace jni {
 class AudioRecordJni : public AudioInput {
  public:
   static ScopedJavaLocalRef<jobject> CreateJavaWebRtcAudioRecord(
-      JNIEnv* env,
-      const JavaRef<jobject>& j_audio_manager);
+      JNIEnv* env);
 
   AudioRecordJni(JNIEnv* env,
                  const AudioParameters& audio_parameters,

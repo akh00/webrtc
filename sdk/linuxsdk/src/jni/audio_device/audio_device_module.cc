@@ -605,16 +605,11 @@ class LinuxsdkAudioDeviceModule : public AudioDeviceModule {
 
 }  // namespace
 
-ScopedJavaLocalRef<jobject> GetAudioManager(JNIEnv* env) {
-  return Java_WebRtcAudioManager_getAudioManager(env);
-}
-
-int GetDefaultSampleRate(JNIEnv* env, const JavaRef<jobject>& j_audio_manager) {
-  return Java_WebRtcAudioManager_getSampleRate(env, j_audio_manager);
+int GetDefaultSampleRate(JNIEnv* env) {
+  return Java_WebRtcAudioManager_getSampleRate(env);
 }
 
 void GetAudioParameters(JNIEnv* env,
-                        const JavaRef<jobject>& j_audio_manager,
                         int input_sample_rate,
                         int output_sample_rate,
                         bool use_stereo_input,
@@ -624,9 +619,9 @@ void GetAudioParameters(JNIEnv* env,
   const int output_channels = use_stereo_output ? 2 : 1;
   const int input_channels = use_stereo_input ? 2 : 1;
   const size_t output_buffer_size = Java_WebRtcAudioManager_getOutputBufferSize(
-      env, j_audio_manager, output_sample_rate, output_channels);
+      env, output_sample_rate, output_channels);
   const size_t input_buffer_size = Java_WebRtcAudioManager_getInputBufferSize(
-      env, j_audio_manager, input_sample_rate, input_channels);
+      env, input_sample_rate, input_channels);
   output_parameters->reset(output_sample_rate,
                            static_cast<size_t>(output_channels),
                            static_cast<size_t>(output_buffer_size));

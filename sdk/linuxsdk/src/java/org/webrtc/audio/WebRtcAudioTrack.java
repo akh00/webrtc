@@ -46,7 +46,6 @@ class WebRtcAudioTrack {
   }
 
   private long nativeAudioTrack;
-  private final AudioManager audioManager;
   private final ThreadUtils.ThreadChecker threadChecker = new ThreadUtils.ThreadChecker();
 
   private ByteBuffer byteBuffer;
@@ -76,7 +75,7 @@ class WebRtcAudioTrack {
 
     @Override
     public void run() {
-      Logging.d(TAG, "AudioTrackThread" + WebRtcAudioUtils.getThreadInfo());
+      Logging.d(TAG, "AudioTrackThread");
 
       // Fixed size in bytes of each 10ms block of audio data that we ask for
       // using callbacks to the native WebRTC client.
@@ -143,14 +142,13 @@ class WebRtcAudioTrack {
   }
 
   @CalledByNative
-  WebRtcAudioTrack(AudioManager audioManager) {
-    this( audioManager, null /* errorCallback */);
+  WebRtcAudioTrack() {
+    this( null /* errorCallback */);
   }
 
   WebRtcAudioTrack(
-      AudioManager audioManager, AudioTrackErrorCallback errorCallback) {
+     AudioTrackErrorCallback errorCallback) {
     threadChecker.detachThread();
-    this.audioManager = audioManager;
     this.errorCallback = errorCallback;
   }
 
@@ -261,7 +259,6 @@ class WebRtcAudioTrack {
     audioThread.interrupt();
     if (!ThreadUtils.joinUninterruptibly(audioThread, AUDIO_TRACK_THREAD_JOIN_TIMEOUT_MS)) {
       Logging.e(TAG, "Join of AudioTrackThread timed out.");
-      WebRtcAudioUtils.logAudioState(TAG, audioManager);
     }
     Logging.d(TAG, "AudioTrackThread has now been stopped.");
     audioThread = null;
@@ -286,7 +283,6 @@ class WebRtcAudioTrack {
       Logging.e(TAG, "The device implements a fixed volume policy.");
       return false;
     }
-    audioManager.setStreamVolume(AudioManager.STREAM_VOICE_CALL, volume, 0);
     return true;
   }
 
@@ -299,7 +295,7 @@ class WebRtcAudioTrack {
   private int getStreamVolume() {
     threadChecker.checkIsOnValidThread();
     Logging.d(TAG, "getStreamVolume");
-    return audioManager.getStreamVolume(AudioManager.STREAM_VOICE_CALL);
+    return 8; //hardcode
   }
 
   private void logMainParameters() {
@@ -365,7 +361,6 @@ class WebRtcAudioTrack {
 
   private void reportWebRtcAudioTrackInitError(String errorMessage) {
     Logging.e(TAG, "Init playout error: " + errorMessage);
-    WebRtcAudioUtils.logAudioState(TAG, audioManager);
     if (errorCallback != null) {
       errorCallback.onWebRtcAudioTrackInitError(errorMessage);
     }
@@ -374,7 +369,6 @@ class WebRtcAudioTrack {
   private void reportWebRtcAudioTrackStartError(
       AudioTrackStartErrorCode errorCode, String errorMessage) {
     Logging.e(TAG, "Start playout error: " + errorCode + ". " + errorMessage);
-    WebRtcAudioUtils.logAudioState(TAG, audioManager);
     if (errorCallback != null) {
       errorCallback.onWebRtcAudioTrackStartError(errorCode, errorMessage);
     }
@@ -382,7 +376,6 @@ class WebRtcAudioTrack {
 
   private void reportWebRtcAudioTrackError(String errorMessage) {
     Logging.e(TAG, "Run-time playback error: " + errorMessage);
-    WebRtcAudioUtils.logAudioState(TAG, audioManager);
     if (errorCallback != null) {
       errorCallback.onWebRtcAudioTrackError(errorMessage);
     }
