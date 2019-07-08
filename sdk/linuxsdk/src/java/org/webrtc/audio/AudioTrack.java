@@ -1,5 +1,8 @@
 package org.webrtc.audio;
 
+import org.webrtc.Logging;
+import org.webrtc.Logging.Severity;
+
 public class AudioTrack {
 
 	public static final int PLAYSTATE_PLAYING = 2;
@@ -14,8 +17,8 @@ public class AudioTrack {
 	}
 
 	public int write(byte[] array, int arrayOffset, int sizeInBytes) {
-		// TODO Auto-generated method stub
-		return 0;
+		 Logging.log(Severity.LS_INFO, "AudioTrack.write: ","array:" + sizeInBytes);
+		return sizeInBytes;
 	}
 
 	public static int getMinBufferSize(int sampleRate, int channelConfig, int encodingPcm16bit) {

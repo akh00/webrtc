@@ -49,6 +49,7 @@ class WebRtcAudioTrack {
   private final ThreadUtils.ThreadChecker threadChecker = new ThreadUtils.ThreadChecker();
 
   private ByteBuffer byteBuffer;
+  private byte[] buffer;
 
   private AudioTrack audioTrack;
   private AudioTrackThread audioThread;
@@ -130,7 +131,8 @@ class WebRtcAudioTrack {
     }
 
     private int writeBytes(AudioTrack audioTrack, ByteBuffer byteBuffer, int sizeInBytes) {
-        return audioTrack.write(byteBuffer.array(), byteBuffer.arrayOffset(), sizeInBytes);
+        byteBuffer.get(buffer, 0, sizeInBytes);
+        return audioTrack.write(buffer, 0, sizeInBytes);
     }
 
     // Stops the inner thread loop which results in calling AudioTrack.stop().
@@ -163,6 +165,7 @@ class WebRtcAudioTrack {
     Logging.d(TAG, "initPlayout(sampleRate=" + sampleRate + ", channels=" + channels + ")");
     final int bytesPerFrame = channels * (BITS_PER_SAMPLE / 8);
     byteBuffer = ByteBuffer.allocateDirect(bytesPerFrame * (sampleRate / BUFFERS_PER_SECOND));
+    buffer = new byte[byteBuffer.capacity()];
     Logging.d(TAG, "byteBuffer.capacity: " + byteBuffer.capacity());
     emptyBytes = new byte[byteBuffer.capacity()];
     // Rather than passing the ByteBuffer with every callback (requiring
